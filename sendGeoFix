@@ -1,0 +1,19 @@
+#!/usr/bin/expect
+
+set timeout 1
+set ip localhost
+set port 5554
+set password [exec cat <YOUR_PATH>/.emulator_console_auth_token]
+set lng -114.0207283
+set lat 46.8671139
+spawn telnet $ip $port
+expect "OK"
+sleep 4
+send "auth $password\r"
+expect "OK"
+sleep 2
+send -- "geo fix $lng $lat\r"
+expect "OK"
+sleep 2
+send -- "exit\r"
+expect eof
